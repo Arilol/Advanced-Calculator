@@ -63,7 +63,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/aril
 	android:allowBackup
 		ADDED from /Users/arildyonkeu/AndroidStudioProjects/AdvancedCalculator/app/src/main/AndroidManifest.xml:6:9-35
 	android:theme
-		ADDED from /Users/arildyonkeu/AndroidStudioProjects/AdvancedCalculator/app/src/main/AndroidManifest.xml:11:9-40
+		ADDED from /Users/arildyonkeu/AndroidStudioProjects/AdvancedCalculator/app/src/main/AndroidManifest.xml:11:9-59
 activity#com.example.advancedcalculator.MainActivity
 ADDED from /Users/arildyonkeu/AndroidStudioProjects/AdvancedCalculator/app/src/main/AndroidManifest.xml:12:9-18:20
 	android:name
