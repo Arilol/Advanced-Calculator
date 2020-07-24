@@ -31,6 +31,7 @@
                 android:layout_span="7"
                 android:layout_weight="0"
                 android:background="#FFFFFF"
+                android:freezesText="true"
                 android:gravity="center"
                 android:textColor="#000000"
                 android:textSize="88dp" />
@@ -162,7 +163,7 @@
                 android:layout_span="1"
                 android:layout_weight="1"
                 android:background="@drawable/buttonborder"
-                android:text="Rad"
+                android:text="Deg"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"

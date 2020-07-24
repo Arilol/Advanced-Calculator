@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Declaring buttons
     Button button0, button1, button2, button3, button4,
             button5, button6, button7, button8, button9,
             buttonAdd, buttonSub, buttonMul, buttonDiv,
@@ -22,18 +24,23 @@ public class MainActivity extends AppCompatActivity {
             buttonLog, buttonPow2, buttonPi, button2Pow, buttonSin, buttonLn,
             buttonPowE, buttonAbs, buttonAsin, buttonAcos, buttonAtan, buttonRadDeg;
 
+    // Declaring the screen variable
     TextView screen;
+
+    // Declaring the evaluator variable
+    ExtendedDoubleEvaluator evaluator = new ExtendedDoubleEvaluator();
 
     private Double result = 0.0;
     private boolean negative = false;
-    private boolean isDegrees = false;
 
+    // Clears the screen text
     private void clear() {
-        if (((screen.getText().length() == 1) && (screen.getText().toString() == "0")) || (screen.getText() == "Error.")) {
+        if (((screen.getText().length() == 1) && (screen.getText().toString() == "0"))) {
             screen.setText("");
         }
     }
 
+    // Checks the text size, if the screen text size exceeds a certain length, it reduced the size in half
     private void checkTextSize() {
         if (screen.getText().length() >= 6) {
             screen.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 44.f);
@@ -42,19 +49,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public double convertToDegrees(String res){
-        double newRes = Double.parseDouble(res);
-        if(isDegrees) {
-            newRes = Math.toDegrees(newRes);
-        }
-        return newRes;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Adds buttons to the view
         button0 = findViewById(R.id.btn0);
         button1 = findViewById(R.id.btn1);
         button2 = findViewById(R.id.btn2);
@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     String txt = screen.getText().toString();
                     String newTxt;
 
+                    // Replace the symbol with a symbol that is parsable by the evaluator
                     if (txt.contains("×")) {
                         newTxt = txt.replace("×", "*");
                         txt = newTxt;
@@ -275,22 +276,24 @@ public class MainActivity extends AppCompatActivity {
                         txt = newTxt;
                     }
 
-                    result = new ExtendedDoubleEvaluator().evaluate(txt);
+                    result = evaluator.evaluate(txt);
 
-                    if (isDegrees) {
-                        double newRes = convertToDegrees(result.toString());
-                        String r = Double.toString(newRes);
-                        screen.setText(r);
+                    // If the result is not a number
+                    if (result.isNaN()) {
+                        // Get Application context, display message, set toast time duration
+                        Toast toast = Toast.makeText(getApplicationContext(), "Can't show undefined result.", Toast.LENGTH_SHORT);
+                        // Show the toast
+                        toast.show();
                     } else {
                         screen.setText(result.toString());
+                        checkTextSize();
                     }
 
-                    checkTextSize();
-
-
                 } catch (Exception e) {
-                    screen.setText("Error.");
-                    checkTextSize();
+                    // Get Application context, display message, set toast time duration
+                    Toast toast = Toast.makeText(getApplicationContext(), "Error.", Toast.LENGTH_SHORT);
+                    // Show the toast
+                    toast.show();
                 }
             }
         });
@@ -393,6 +396,7 @@ public class MainActivity extends AppCompatActivity {
                         screen.setText(sb.toString());
                     }
                 } else {
+                    // Remove the "(-"
                     StringBuilder builder = new StringBuilder();
                     if (str == "(-") {
                         screen.setText("");
@@ -476,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 clear();
                 checkTextSize();
-                screen.setText(screen.getText() + "!");
+                screen.setText(screen.getText() + "fac(");
             }
         });
 
@@ -591,20 +595,20 @@ public class MainActivity extends AppCompatActivity {
         buttonRadDeg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isDegrees = !isDegrees;
-                if (isDegrees) {
+                evaluator.isDegrees = !evaluator.isDegrees;
+                if (!evaluator.isDegrees) {
                     buttonRadDeg.setTextColor(Color.parseColor("#FFC5BA"));
-                    buttonRadDeg.setText("Deg");
+                    buttonRadDeg.setText("Rad");
                 } else {
                     buttonRadDeg.setTextColor(Color.parseColor("#FFFFFF"));
-                    buttonRadDeg.setText("Rad");
+                    buttonRadDeg.setText("Deg");
                 }
             }
         });
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // In Landscape
+            // In Landscape, so that the calculator shows its buttons that you would find in a scientific calculator
             buttonSqrt.setVisibility(View.VISIBLE);
             buttonTan.setVisibility(View.VISIBLE);
             buttonExpo.setVisibility(View.VISIBLE);
@@ -644,5 +648,11 @@ public class MainActivity extends AppCompatActivity {
             buttonAtan.setVisibility(View.GONE);
             buttonRadDeg.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("screen", screen.getText().toString()); // this text comes from your textview
     }
 }
