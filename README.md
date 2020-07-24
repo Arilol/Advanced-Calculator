@@ -8,7 +8,7 @@ simple calculations, trigonometric calculations, scientific notations, and logar
 
 Here is a state diagram of the advanced calculator.
 
-![](https://github.com/Arilol/Advanced-Calculator/blob/master/A5StateDiagram.PNG)
+![](https://github.com/Arilol/Advanced-Calculator/blob/master/A5Diagram.PNG)
 
 **User stories**
 
