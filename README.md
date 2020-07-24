@@ -2,9 +2,14 @@
 
 This application uses a Java framework called Javaluator, developed by Fathzer. It's a simple and powerful Java infix expression evaluator, and has the ability to have new functions added. 
 Visit http://javaluator.sourceforge.net/en/home/ for more information. The most important aspects of this application are the abilities to perform complex expressions,
-simple calculations, trigonometric calculations, and logarithmic calculations. All these add more options for calculations for the user to pick.
+simple calculations, trigonometric calculations, scientific notations, and logarithmic calculations. All these add more options of calculations for the user to pick.
 
+**State Diagram**
 
+Here is a state diagram of the advanced calculator.
+
+![State diagram]
+(https://github.com/Arilol/Advanced-Calculator/blob/master/A5StateDiagram.PNG)
 
 **User stories**
 
