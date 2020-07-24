@@ -1,3 +1,5 @@
+// Written by Arild
+
 package com.example.advancedcalculator;
 
 import java.util.Iterator;
